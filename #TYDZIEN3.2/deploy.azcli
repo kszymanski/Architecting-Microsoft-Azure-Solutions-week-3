@@ -1,0 +1,8 @@
+$rgName = 'fei-dev-rg-vms'
+
+az group create -n $rgName
+
+az group deployment create -n tydzien3.2 `
+    -g $rgName `
+    --template-file ./template.json `
+    --parameters ./template.params.json

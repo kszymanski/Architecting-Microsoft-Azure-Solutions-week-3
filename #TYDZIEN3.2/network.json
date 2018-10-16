@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment":{
+      "type": "string"
+    },
+    "vnetName": {
+      "type": "string"
+    },
+    "addressPrefix": {
+      "type": "string"
+    },
+    "subnetPrefixes": {
+      "type": "array"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[concat('fei-', parameters('environment'), '-vnet-', parameters('vnetName'))]",
+      "apiVersion": "2018-04-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('addressPrefix')]"
+          ]
+        },
+        "copy": [
+          {
+            "name": "subnets",
+            "count": 2,
+            "input": {
+              "name": "[concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('subnets'))]",
+              "properties": {
+                "addressPrefix": "[parameters('subnetPrefixes')[copyIndex('subnets')]]"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

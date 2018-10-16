@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "type": "string"
+    },
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2017-05-10",
+      "name": "networks",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://github.com/kszymanski/",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "environment": {
+            "value": "[parameters('environment')]"
+          },
+          "vnetName": {
+            "value": "main"
+          },
+          "addressPrefix": {
+            "value": "10.0.0.0/16"
+          },
+          "subnetPrefixes": {
+            "value": [
+              "10.0.0.0/24",
+              "10.0.1.0/24"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

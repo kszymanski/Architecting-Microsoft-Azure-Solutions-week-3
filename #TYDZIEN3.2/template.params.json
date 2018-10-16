@@ -4,6 +4,15 @@
     "parameters": {
       "environment": {
         "value": "dev"
+      },
+      "name": {
+        "value": "ssh"
+      },
+      "adminUserName": {
+        "value": "admin"
+      },
+      "adminPassword": {
+        "value": "p4ssword!"
       }
     }
   }

@@ -15,12 +15,43 @@
       "type": "array"
     }
   },
+  "variables": {
+    "vnetName": "[concat('fei-', parameters('environment'), '-vnet-', parameters('vnetName'))]",
+    "nsgName": "[concat('fei-', parameters('environment'), '-nsg-', parameters('vnetName'))]"
+  },
   "resources": [
     {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[concat('fei-', parameters('environment'), '-nsg-', parameters('vnetName'))]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2018-03-01",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "SSH",
+            "properties": {
+              "description": "Allows SSH traffic",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[concat('fei-', parameters('environment'), '-vnet-', parameters('vnetName'))]",
+      "name": "[variables('vnetName')]",
       "apiVersion": "2018-04-01",
       "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
@@ -30,16 +61,31 @@
         "copy": [
           {
             "name": "subnets",
-            "count": 2,
+            "count": "[length(parameters('subnetPrefixes'))]",
             "input": {
               "name": "[concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('subnets'))]",
               "properties": {
-                "addressPrefix": "[parameters('subnetPrefixes')[copyIndex('subnets')]]"
+                "addressPrefix": "[parameters('subnetPrefixes')[copyIndex('subnets')]]",
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                }
               }
             }
           }
         ]
       }
     }
-  ]
+  ],
+  "outputs": {
+    "subnets": {
+      "type": "array",
+      "copy": [
+        {
+          "name": "value",
+          "count": "[length(parameters('subnetPrefixes'))]",
+          "input": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('value')))]"
+        }
+      ]
+    }
+  }
 }

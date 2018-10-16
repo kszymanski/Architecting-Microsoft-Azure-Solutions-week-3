@@ -4,6 +4,15 @@
   "parameters": {
     "environment": {
       "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "adminUserName": {
+      "type": "string"
+    },
+    "adminPassword": {
+      "type": "string"
     }
   },
   "variables": {},
@@ -33,6 +42,43 @@
               "10.0.0.0/24",
               "10.0.1.0/24"
             ]
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "networks",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[reference('networks')]"
+      ],
+      "copy": {
+        "name": "vmcopy",
+        "count": 2,
+        "mode": "Parallel"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/kszymanski/Architecting-Microsoft-Azure-Solutions-week-3/master/%23TYDZIEN3.2/network.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "environment": {
+            "value": "[parameters('environment')]"
+          },
+          "adminUserName": {
+            "value": "[parameters('adminUserName')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "name": {
+            "value": "[concat(parameters('name'), copyIndex('vmcopy'))]"
+          },
+          "subnetId": {
+            "value": "[reference('networks').outputs.subnets.value]"
           }
         }
       }

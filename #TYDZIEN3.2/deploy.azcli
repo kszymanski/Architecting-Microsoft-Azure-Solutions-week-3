@@ -1,6 +1,6 @@
 $rgName = 'fei-dev-rg-vms'
 
-az group create -n $rgName
+az group create -n $rgName -l northeurope
 
 az group deployment create -n tydzien3.2 `
     -g $rgName `

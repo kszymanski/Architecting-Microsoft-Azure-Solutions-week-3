@@ -4,7 +4,7 @@
   "parameters": {
     "environment": {
       "type": "string"
-    },
+    }
   },
   "variables": {},
   "resources": [
@@ -15,7 +15,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://github.com/kszymanski/",
+          "uri": "https://raw.githubusercontent.com/kszymanski/Architecting-Microsoft-Azure-Solutions-week-3/master/%23TYDZIEN3.2/network.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {

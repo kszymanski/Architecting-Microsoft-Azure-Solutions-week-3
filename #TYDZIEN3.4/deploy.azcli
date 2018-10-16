@@ -7,14 +7,14 @@ az keyvault create -n fei-dev-kvault-secrets -g $rgName
 az keyvault update -n $keyVaultName -g $rgName --set properties.enabledForDeployment=true
 az keyvault update -n $keyVaultName -g $rgName --set properties.enabledForTemplateDeployment=true
 
-
 $adminUsernameKey = 'adminUsername'
-$adminPasswordKey = 'adminPassword'
 $adminUsername = 'kamilek'
-$adminPassword = 'p4ssword!'
 az keyvault secret set --name $adminUsernameKey `
     --vault-name $keyVaultName `
     --value $adminUsername
+
+$adminPasswordKey = 'adminPassword'
+$adminPassword = 'p4ssword!'
 az keyvault secret set --name $adminPasswordKey `
     --vault-name $keyVaultName `
     --value $adminPassword

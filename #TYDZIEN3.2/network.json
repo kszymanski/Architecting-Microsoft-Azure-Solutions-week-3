@@ -17,7 +17,17 @@
   },
   "variables": {
     "vnetName": "[concat('fei-', parameters('environment'), '-vnet-', parameters('vnetName'))]",
-    "nsgName": "[concat('fei-', parameters('environment'), '-nsg-', parameters('vnetName'))]"
+    "nsgName": "[concat('fei-', parameters('environment'), '-nsg-', parameters('vnetName'))]",
+    "subnets": {
+      "type": "array",
+      "copy": [
+        {
+          "name": "value",
+          "count": "[length(parameters('subnetPrefixes'))]",
+          "input": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('value')))]"
+        }
+      ]
+    }
   },
   "resources": [
     {
@@ -79,13 +89,7 @@
   "outputs": {
     "subnets": {
       "type": "array",
-      "copy": [
-        {
-          "name": "value",
-          "count": "[length(parameters('subnetPrefixes'))]",
-          "input": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('value')))]"
-        }
-      ]
+      "value": "[variables('subnets')]" 
     }
   }
 }

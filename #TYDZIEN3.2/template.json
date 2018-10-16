@@ -51,7 +51,7 @@
       "name": "[concat('vm', copyIndex('vmcopy'))]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
-        "[reference('networks')]"
+        "networks"
       ],
       "copy": {
         "name": "vmcopy",

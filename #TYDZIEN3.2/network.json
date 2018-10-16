@@ -23,7 +23,7 @@
         "name": "subnets",
         "count": "[length(parameters('subnetPrefixes'))]",
         "input": {
-          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('value')))]"
+          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('subnets')))]"
         }
       }
     ]

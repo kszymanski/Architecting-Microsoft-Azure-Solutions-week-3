@@ -27,7 +27,7 @@
         "name": "[concat('fei-', parameters('environment'), '-vm-', parameters('name'))]",
         "imagePublisher": "Canonical",
         "imageOffer": "UbuntuServer",
-        "size": "Standard_A0",
+        "size": "Standard_B1s",
         "sku": "18.04-LTS",
         "osDisk": "[concat('fei', parameters('environment'), 'disk', parameters('name'), 'os')]"
       },
@@ -37,7 +37,7 @@
         "dns": "[concat('fei', parameters('environment'), 'pip', parameters('name'))]"
 
       },
-      "nicName": "[concat('fei-', parameters('environment'), '-stg-', parameters('name'))]"
+      "nicName": "[concat('fei-', parameters('environment'), '-nic-', parameters('name'))]"
     },
     "resources": [
       {

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environment": {
+      "value": "dev"
+    },
+    "name": {
+      "value": "ssh"
+    },
+    "vaultName": {
+      "value": "fei-dev-kvault-secrets"
+    },
+    "vaultResourceGroupName": {
+      "value": "fei-dev-rg-secret"
+    }
+  }
+}

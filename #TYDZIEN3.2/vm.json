@@ -99,7 +99,7 @@
         ],
         "properties": {
           "hardwareProfile": {
-            "vmSize": "[variables('vm').name]"
+            "vmSize": "[variables('vm').size]"
           },
           "osProfile": {
             "computerName": "[variables('vm').name]",

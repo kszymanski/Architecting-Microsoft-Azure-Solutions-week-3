@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "environment":{
+    "environment": {
       "type": "string"
     },
     "vnetName": {
@@ -18,18 +18,15 @@
   "variables": {
     "vnetName": "[concat('fei-', parameters('environment'), '-vnet-', parameters('vnetName'))]",
     "nsgName": "[concat('fei-', parameters('environment'), '-nsg-', parameters('vnetName'))]",
-    "subnets": {
-      "type": "array",
-      "copy": [
-        {
-          "name": "value",
-          "count": "[length(parameters('subnetPrefixes'))]",
-          "input": {
-            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('value')))]"
-          }
+    "copy": [
+      {
+        "name": "subnets",
+        "count": "[length(parameters('subnetPrefixes'))]",
+        "input": {
+          "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat('fei-', parameters('environment'), '-snet-',parameters('vnetName') , copyIndex('value')))]"
         }
-      ]
-    }
+      }
+    ]
   },
   "resources": [
     {
@@ -91,7 +88,7 @@
   "outputs": {
     "subnets": {
       "type": "array",
-      "value": "[variables('subnets')]" 
+      "value": "[variables('subnets')]"
     }
   }
 }

@@ -48,7 +48,7 @@
     },
     {
       "apiVersion": "2017-05-10",
-      "name": "networks",
+      "name": "[concat('vm', copyIndex('vmcopy'))]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
         "[reference('networks')]"
@@ -61,7 +61,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://raw.githubusercontent.com/kszymanski/Architecting-Microsoft-Azure-Solutions-week-3/master/%23TYDZIEN3.2/network.json",
+          "uri": "https://raw.githubusercontent.com/kszymanski/Architecting-Microsoft-Azure-Solutions-week-3/master/%23TYDZIEN3.2/vm.json",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {

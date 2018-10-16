@@ -15,7 +15,8 @@
       "type": "string"
     }
   },
-  "variables": {},
+  "variables": {
+  },
   "resources": [
     {
       "apiVersion": "2017-05-10",
@@ -78,7 +79,7 @@
             "value": "[concat(parameters('name'), copyIndex('vmcopy'))]"
           },
           "subnetId": {
-            "value": "[reference('networks').outputs.subnets.value]"
+            "value": "[reference('networks').outputs.subnets.value[copyIndex('vmcopy')].id]"
           }
         }
       }

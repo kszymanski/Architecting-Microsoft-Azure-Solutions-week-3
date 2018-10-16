@@ -20,7 +20,7 @@ az keyvault secret set --name $adminPasswordKey `
     --value $adminPassword
 
 $rgName = 'fei-dev-rg-vms'
-
+az group create -n $rgName -l northeurope
 az group deployment create -n tydzien3.4 `
     -g $rgName `
     --template-file ./template.json `
